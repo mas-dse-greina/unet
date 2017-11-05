@@ -83,12 +83,12 @@ def model5_MultiLayer(args=None, weights=False,
 	pool2 = MaxPooling2D(name='pool2', pool_size=(2, 2))(conv2)
 
 	conv3 = Conv2D(name='conv3a', filters=128, kernel_size=(3, 3), activation='relu', padding='same')(pool2)
-	conv3 = Dropout(dropout)(conv3) ### Trying dropout layers earlier on, as indicated in the paper
+	conv3 = Dropout(dropout)(conv3)
 	conv3 = Conv2D(name='conv3b', filters=128, kernel_size=(3, 3), activation='relu', padding='same')(conv3)
 	pool3 = MaxPooling2D(name='pool3', pool_size=(2, 2))(conv3)
 
 	conv4 = Conv2D(name='conv4a', filters=256, kernel_size=(3, 3), activation='relu', padding='same')(pool3)
-	conv4 = Dropout(dropout)(conv4) ### Trying dropout layers earlier on, as indicated in the paper
+	conv4 = Dropout(dropout)(conv4) 
 	conv4 = Conv2D(name='conv4b', filters=256, kernel_size=(3, 3), activation='relu', padding='same')(conv4)
 	pool4 = MaxPooling2D(name='pool4', pool_size=(2, 2))(conv4)
 
@@ -118,7 +118,6 @@ def model5_MultiLayer(args=None, weights=False,
 		up8 = concatenate([Conv2DTranspose(name='transConv8', filters=64, kernel_size=(2, 2), strides=(2, 2), padding='same')(conv7), conv2], axis=-1)
 
 	conv8 = Conv2D(name='conv8a', filters=64, kernel_size=(3, 3), activation='relu', padding='same')(up8)
-	#conv8 = Dropout(dropout)(conv8)
 	conv8 = Conv2D(name='conv8b', filters=64, kernel_size=(3, 3), activation='relu', padding='same')(conv8)
 	
 	if args.use_upsampling:
@@ -127,7 +126,6 @@ def model5_MultiLayer(args=None, weights=False,
 		up9 = concatenate([Conv2DTranspose(name='transConv9', filters=32, kernel_size=(2, 2), strides=(2, 2), padding='same')(conv8), conv1], axis=-1)
 
 	conv9 = Conv2D(name='conv9a', filters=32, kernel_size=(3, 3), activation='relu', padding='same')(up9)
-	#conv9 = Dropout(dropout)(conv9)
 	conv9 = Conv2D(name='conv9b', filters=32, kernel_size=(3, 3), activation='relu', padding='same')(conv9)
 
 	conv10 = Conv2D(name='Mask', filters=n_cl_out, kernel_size=(1, 1), activation='sigmoid')(conv9)
